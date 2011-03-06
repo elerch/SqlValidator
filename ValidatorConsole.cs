@@ -16,10 +16,7 @@ namespace DatabaseValidator
         {
             int rc = 0;
             bool process = true;
-            if (args.Length == 0) {
-                ShowHelp();
-                process = false;
-            }
+
             foreach (string arg in args)
                 if (arg.StartsWith("/?", StringComparison.CurrentCulture) || arg.StartsWith("/h", StringComparison.CurrentCultureIgnoreCase))
                 {
