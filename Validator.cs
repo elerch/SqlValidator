@@ -208,7 +208,7 @@ namespace DatabaseValidator
                 _parameterText += "WHERE ";
             }
 
-            string rc = _parameterText + string.Format(CultureInfo.InvariantCulture,"(sp.type = N'P' OR sp.type = N'RF' OR sp.type='PC')and(sp.name=N'{0}' and SCHEMA_NAME(sp.schema_id)=N'{1}') ", name, schema);
+            string rc = _parameterText + string.Format(CultureInfo.InvariantCulture,"(sp.type = N'TR' OR sp.type = N'P' OR sp.type = N'RF' OR sp.type='PC')and(sp.name=N'{0}' and SCHEMA_NAME(sp.schema_id)=N'{1}') ", name, schema);
             rc += "ORDER BY ";
             return rc + "param.parameter_id ASC";
         }
@@ -231,7 +231,7 @@ namespace DatabaseValidator
         /// <returns></returns>
         private static string GetProcedureListSql(SqlConnection db, Verbosity verbosity)
         {
-            string getObjSql = "select name, OBJECTPROPERTY(id, 'ExecIsQuotedIdentOn') as quoted_ident_on, OBJECTPROPERTY(id, 'ExecIsAnsiNullsOn') as ansi_nulls_on, object_schema_name(o.id) [schema], [type] from sysobjects o where type in ('P', 'V', 'FN') and category = 0";
+            string getObjSql = "select name, OBJECTPROPERTY(id, 'ExecIsQuotedIdentOn') as quoted_ident_on, OBJECTPROPERTY(id, 'ExecIsAnsiNullsOn') as ansi_nulls_on, object_schema_name(o.id) [schema], [type] from sysobjects o where type in ('P', 'V', 'FN', 'TR') and category = 0";
             string message = "Detected SQL Server version SQL 2005 or later";
 
             //Determine version of database
