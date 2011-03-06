@@ -82,6 +82,10 @@ namespace DatabaseValidator
             Console.WriteLine("Usage: SqlValidator [/v:VERBOSITY] [/c:CONNECTIONSTRING] [/x]");
             Console.WriteLine("\tVerbosity = q (quiet - errors only), n (normal), or v (verbose)");
             Console.WriteLine("\t/x will execute objects that appear safe (no INSERT, UPDATE, or DELETE statements)");
+            Console.WriteLine("\n\t SqlValidator will check stored procedures, functions, and triggers for syntax using the SQL Server engine");
+            Console.WriteLine("\t This is a basic check and does not guarantee the code will operate properly.");
+            Console.WriteLine("\t For example, unless executed with the /x option, SQL Server's check does not validate that referenced tables actually exist");
+
         }
 
         private static string GetConnectionString(string[] args)
