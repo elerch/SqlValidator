@@ -48,7 +48,7 @@ namespace DatabaseValidator
                         if (!string.IsNullOrEmpty(text))
                         {
                             succeeded = TryCompile(db, schema, name, quotedIdent, ansiNulls, text);
-                            if (succeeded && executeObjects)
+                            if (succeeded && executeObjects && dr["type"] as string != "TR")
                                 succeeded = ExecuteIfSafe(db, schema, name, dr["type"] as string, text);
                         }
 
