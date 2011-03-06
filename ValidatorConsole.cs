@@ -29,9 +29,15 @@ namespace DatabaseValidator
 
             try
             {
-                if (process)
-                    if (!Validator.DatabaseIsValid(GetConnectionString(args), GetVerbosity(args), GetExecutionOption(args)))
+                if (process) {
+                    var connectionString = GetConnectionString(args);
+                    Console.WriteLine("Checking data source: " + GetValueForConnectionStringKey(connectionString,"data source"));
+                    Console.WriteLine("Database: " + GetValueForConnectionStringKey(connectionString, "Initial Catalog") ?? "(default for user)");
+                    if (
+                        !Validator.DatabaseIsValid(connectionString, GetVerbosity(args),
+                                                   GetExecutionOption(args)))
                         rc = 1;
+                }
             }
             catch (Exception ex)
             {
@@ -41,6 +47,16 @@ namespace DatabaseValidator
             }
 
             return rc;
+        }
+
+        private static string GetValueForConnectionStringKey(string connectionString, string value) 
+        {
+            foreach (var part in connectionString.Split(';')) {
+                var kvp = part.Split('=');
+                if (kvp[0].ToLowerInvariant() == value.ToLowerInvariant())
+                    return kvp[1];
+            }
+            return null;
         }
 
         private static bool GetExecutionOption(string[] args)
